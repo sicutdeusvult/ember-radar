@@ -1,0 +1,44 @@
+name: ember-radar
+version: 0.1.0
+manifest_version: 2
+api_version: 1
+description: "Ember, the Solana launchpad where every coin is paired with a tokenized stock or a blue chip and its fees go to holders, burns, a lotto or a trader, inside Hermes: discover coins, read one coin's whole card, holders, trades, fee payouts, the live tape, the FOMO traders board and the stock pairs; a watchlist whose moves Hermes whispers at the start of a turn; /ember; a daily-brief automation. Read-only, no keys."
+author: Ember (embercurve.fun)
+license: MIT
+homepage: https://github.com/embercurve/ember-radar
+tags: [solana, launchpad, crypto, tokenized-stocks, markets, watchlist]
+requires_hermes: ">=0.22.6"
+provides_tools:
+  - ember_markets
+  - ember_coin
+  - ember_holders
+  - ember_trades
+  - ember_fees
+  - ember_feed
+  - ember_fomo_board
+  - ember_pairs
+  - ember_watch
+  - ember_pulse
+provides_hooks:
+  - pre_llm_call
+config_schema:
+  api_url:
+    type: str
+    default: "https://embercurve.fun"
+    label: "Ember site"
+    description: "The Ember deployment to read (its /api/solana endpoints). The public site by default; a self-hosted Ember or the local demo (http://127.0.0.1:4173) works too."
+  pulse:
+    type: bool
+    default: true
+    label: "Watchlist pulse"
+    description: "At the start of a turn, tell the model what moved on your watchlist (a price move past the threshold, a graduation, a payout round). Off: the watchlist only answers when asked."
+  pulse_min_move_pct:
+    type: float
+    default: 15
+    label: "Pulse threshold (%)"
+    description: "A price move on a watched coin smaller than this is not worth a whisper."
+  pulse_cooldown_min:
+    type: int
+    default: 30
+    label: "Pulse cooldown (minutes)"
+    description: "At most one pulse per this many minutes, so a long session is not interrupted on every turn."
